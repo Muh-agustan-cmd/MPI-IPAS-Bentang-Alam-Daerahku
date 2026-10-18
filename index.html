@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MPI IPAS – Bentang Alam Daerahku</title>
+<style>
+:root{--bg:#eaf4ff;--card:#fff;--tx:#12304f;--mu:#52708f;--pr:#1e6fd9;--pl:#d6e9ff;--ok:#1a9d5c;--no:#d64545;--ac:#f5a623;--sh:0 6px 18px rgba(30,111,217,.15);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1b2c;--card:#18283d;--tx:#e8f1fb;--mu:#9bb4cf;--pr:#5aa2ff;--pl:#233a57;--sh:0 6px 18px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--bg:#0e1b2c;--card:#18283d;--tx:#e8f1fb;--mu:#9bb4cf;--pr:#5aa2ff;--pl:#233a57;--sh:0 6px 18px rgba(0,0,0,.4)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.55 "Nunito","Segoe UI",system-ui,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:14px}
+.card{background:var(--card);border-radius:22px;box-shadow:var(--sh);padding:20px;margin:12px 0;animation:f .35s}
+@keyframes f{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:1.7rem;margin:.2em 0}h2{font-size:1.4rem;margin:.2em 0}h3{margin:.3em 0}
+.mu{color:var(--mu);font-size:.95rem}
+button,input,textarea{font:inherit}
+.b{background:var(--pr);color:#fff;border:0;border-radius:16px;padding:14px 22px;min-height:52px;cursor:pointer;font-weight:700}
+.b.s{background:var(--pl);color:var(--tx)}.b:disabled{opacity:.45;cursor:not-allowed}
+input,textarea{width:100%;padding:14px;border-radius:14px;border:2px solid var(--pl);background:var(--bg);color:var(--tx);margin:6px 0 12px}
+.nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:14px}
+.top{display:flex;gap:6px;overflow-x:auto;padding:4px 0}
+.top button{flex:1;min-width:62px;background:var(--card);border:2px solid var(--pl);border-radius:14px;padding:8px 4px;min-height:48px;color:var(--tx);font-size:.8rem;cursor:pointer}
+.top button.on{background:var(--pr);color:#fff;border-color:var(--pr)}
+.pg{height:10px;background:var(--pl);border-radius:9px;overflow:hidden;margin:8px 0}.pg i{display:block;height:100%;background:var(--pr);transition:width .3s}
+.g{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.k{background:var(--pl);border-radius:18px;padding:14px;cursor:pointer;min-height:70px;border:0;text-align:left;color:var(--tx)}
+.o{display:block;width:100%;text-align:left;background:var(--bg);border:2px solid var(--pl);border-radius:14px;padding:13px;margin:8px 0;min-height:52px;color:var(--tx);cursor:pointer}
+.o.sel{border-color:var(--pr);background:var(--pl)}.o.ok{border-color:var(--ok);background:rgba(26,157,92,.18)}.o.no{border-color:var(--no);background:rgba(214,69,69,.15)}
+.st{padding:10px 14px;border-radius:12px;margin:10px 0;font-size:.95rem}.st.ok{background:rgba(26,157,92,.18)}.st.er{background:rgba(214,69,69,.15)}.st.wa{background:rgba(245,166,35,.2)}
+.logo{width:64px;height:64px}
+footer{text-align:center;color:var(--mu);font-size:.85rem;padding:18px 8px}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td,th{padding:6px;border-bottom:1px solid var(--pl);text-align:left}
+.sc{overflow-x:auto}
+</style></head><body><div class="w" id="app"></div>
+<footer>MPI dibuat oleh <b>Muhammad Agustan, S.Pd</b> · SD Negeri 2 Lasusua · IPAS Kelas 4</footer>
+<script>
+const GURU="Muhammad Agustan, S.Pd",SEK="SD Negeri 2 Lasusua",MAPEL="IPAS",MATERI="Bentang Alam Daerahku";
+const TP=[["🏝️","Peserta didik mampu menganalisis hubungan antara kondisi bentang alam (pantai, dataran rendah, dataran tinggi/pegunungan) dengan mata pencaharian warga sekitar secara kritis."],["🔍","Peserta didik mampu membedakan serta mengidentifikasi berbagai bentuk kenampakan alam dan kenampakan buatan di lingkungan sekitar tempat tinggal."]];
+const SUB=[
+{t:"Kenampakan Alam & Buatan",i:"🗺️",p:"Kenampakan alam terbentuk sendiri oleh alam, misalnya gunung, sungai, laut, dan lembah. Kenampakan buatan dibuat manusia, misalnya sawah, jembatan, waduk, dan pelabuhan. Ayo kelompokkan!",sort:[["Gunung","a"],["Jembatan","b"],["Sungai","a"],["Waduk","b"],["Lembah","a"],["Pelabuhan","b"]]},
+{t:"Pantai & Nelayan",i:"🏖️",p:"Pantai adalah daerah pertemuan darat dan laut. Ketuk kartu untuk membuka informasi!",c:[["🎣 Nelayan","Warga pantai menangkap ikan di laut karena laut dekat dan kaya hasil."],["🧂 Petani garam & tambak","Air laut diolah menjadi garam. Tambak dipakai memelihara ikan atau udang."],["⛱️ Wisata bahari","Pantai yang indah menarik pengunjung, sehingga warga berdagang dan membuka jasa wisata."]]},
+{t:"Dataran Rendah & Petani",i:"🌾",p:"Dataran rendah adalah daerah luas yang datar dan tidak tinggi dari permukaan laut. Ketuk kartu!",c:[["🌾 Petani padi","Tanahnya datar dan subur serta mudah dialiri air, cocok untuk sawah."],["🐄 Peternak","Lahan luas dipakai untuk memelihara sapi, kambing, atau ayam."],["🏪 Pedagang & pekerja","Jalan mudah dibuat sehingga banyak pasar, toko, dan permukiman."]]},
+{t:"Dataran Tinggi & Pegunungan",i:"⛰️",p:"Dataran tinggi dan pegunungan letaknya tinggi dan udaranya sejuk. Ketuk kartu!",c:[["🥬 Petani sayur","Udara sejuk dan tanah subur cocok untuk sayur, buah, dan teh."],["☕ Pekebun","Warga berkebun kopi, teh, atau cengkih di lereng gunung."],["🌲 Penjaga hutan & wisata","Hutan dijaga, dan pemandangan gunung menarik wisatawan."]]}];
+const Q=[
+["Kenampakan alam adalah bentuk permukaan bumi yang…",["dibuat manusia","terbentuk secara alami","dibangun dari beton","hanya ada di kota"],1,"Kenampakan alam terbentuk sendiri tanpa dibuat manusia."],
+["Contoh kenampakan buatan adalah…",["gunung","sungai","waduk","lembah"],2,"Waduk dibuat manusia untuk menampung air."],
+["Mata pencaharian utama warga di daerah pantai adalah…",["nelayan","petani teh","penebang pinus","pekebun apel"],0,"Laut dekat pantai menyediakan ikan."],
+["Dataran rendah cocok untuk bertani…",["padi","teh di lereng curam","salju","lumut gunung"],0,"Tanah datar, subur, dan mudah dialiri air cocok untuk sawah."],
+["Warga pegunungan banyak berkebun sayur karena…",["lautnya dekat","udaranya sejuk dan tanahnya subur","tanahnya berpasir asin","lahannya sangat panas"],1,"Udara sejuk dan tanah subur cocok untuk sayuran."],
+["Udara di dataran tinggi biasanya…",["lebih sejuk","lebih panas dari pantai","selalu berasap","selalu asin"],0,"Makin tinggi tempatnya, udara makin sejuk."],
+["Garam dibuat dari air laut oleh warga di daerah…",["pegunungan","pantai","gurun","kota besar"],1,"Air laut hanya tersedia di pantai."],
+["Manakah yang termasuk kenampakan alam?",["jembatan","bendungan","gunung","pelabuhan"],2,"Gunung terbentuk secara alami."],
+["Manakah yang termasuk kenampakan buatan?",["lembah","sungai","pantai","jembatan"],3,"Jembatan dibangun oleh manusia."],
+["Peternakan sapi yang luas paling mudah dibuat di…",["dataran rendah","puncak gunung berbatu","tengah laut","tebing curam"],0,"Dataran rendah luas dan datar sehingga cocok untuk padang ternak."],
+["Tambak udang biasanya dibuat dekat…",["puncak gunung","pantai","kebun teh","hutan lebat"],1,"Tambak memakai air laut atau payau dekat pantai."],
+["Sungai termasuk kenampakan…",["buatan","alam","bangunan","mesin"],1,"Sungai mengalir secara alami."],
+["Wisata bahari berkembang di daerah…",["pantai","dataran tinggi saja","gurun","lembah kering"],0,"Wisata bahari adalah wisata laut dan pantai."],
+["Pekebun teh banyak ditemukan di…",["tepi pantai","pegunungan","tengah sawah","tambak"],1,"Teh tumbuh baik di lereng yang sejuk."],
+["Danau buatan adalah kenampakan alam.",["Benar","Salah"],1,"Danau buatan dibuat manusia, jadi termasuk kenampakan buatan."],
+["Nelayan banyak tinggal di dataran tinggi.",["Benar","Salah"],1,"Nelayan banyak tinggal di pantai dekat laut."],
+["Sawah yang luas banyak ditemukan di dataran rendah.",["Benar","Salah"],0,"Tanah datar dan berair cocok untuk sawah."],
+["Bentang alam memengaruhi mata pencaharian warga.",["Benar","Salah"],0,"Warga memanfaatkan alam di sekitarnya untuk bekerja."],
+["Pelabuhan adalah kenampakan buatan.",["Benar","Salah"],0,"Pelabuhan dibangun manusia untuk kapal."],
+["Lembah adalah kenampakan buatan.",["Benar","Salah"],1,"Lembah adalah cekungan di antara gunung yang terbentuk alami."]];
+const MENU=["Masuk","Tujuan","Materi","Latihan","Refleksi"];
+let S={pg:0,sub:0,name:"",kls:"4",sid:"",start:null,sorted:{},open:{},ans:[],done:false,att:0,t0:null,res:null,sent:{},busy:{},msg:{},ref:{p1:"",p2:"",t1:"",t2:"",t3:""},sort:null};
+let DB=null,US=null,OWN=false;
+const $=id=>document.getElementById(id),e=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LS={get(){try{return JSON.parse(localStorage.getItem("mpi_q")||"[]")}catch(_){return[]}},put(r){try{const a=LS.get();a.push(r);localStorage.setItem("mpi_q",JSON.stringify(a))}catch(_){}}};
+(async()=>{try{if(window.claude){DB=await claude.use("db");US=await claude.use("user");OWN=US?US.isOwner():false;render()}}catch(_){}})();
+const now=()=>new Date().toISOString();
+async function save(col,id,data){ // returns "ok" | "local" | "err"
+  LS.put({col,id,...data});
+  if(!DB)return "local";
+  try{await DB.collection(col).doc(id).set({...data,id});return "ok"}catch(err){return "err"}}
+function go(p){if(p>0&&!S.sid)return;S.pg=p;render();scrollTo(0,0)}
+function start(){const n=$("nm").value.trim(),k=$("kl").value.trim();if(!n||!k){S.msg.login="Nama dan kelas tidak boleh kosong.";return render()}
+  S.name=n;S.kls=k;S.sid="S"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);S.start=now();S.msg.login="";
+  save("mpi_sesi",S.sid,{waktu:S.start,guru:GURU,mapel:MAPEL,materi:MATERI,nama:n,kelas:k,mulai:S.start,status:"Mulai"}).then(r=>{S.sess=r;render()});
+  S.pg=1;render()}
+function hdr(){const pr=[S.pg>=1?1:0,S.pg>=2?1:0,S.pg>=3?1:0,S.pg>=4?1:0,S.pg>=4&&S.sent.ref?1:0];
+  const pct=S.pg===0?0:Math.round((S.pg/4)*100);
+  return `<div class="top">${MENU.map((m,i)=>`<button class="${S.pg===i?"on":""}" ${i>0&&!S.sid?"disabled":""} onclick="go(${i})">${["🔐","🎯","📚","✏️","💭"][i]}<br>${m}</button>`).join("")}${OWN?`<button class="${S.pg===5?"on":""}" onclick="go(5)">📊<br>Rekap</button>`:""}</div><div class="pg"><i style="width:${S.pg===5?100:pct}%"></i></div>`}
+function R0(){return `<div class="card" style="text-align:center">
+<svg class="logo" viewBox="0 0 64 64" role="img" aria-label="Logo Tut Wuri Handayani (placeholder)"><circle cx="32" cy="32" r="30" fill="#1e6fd9"/><path d="M32 14l6 14h-12z M32 50c-8-4-12-10-12-16 4 0 8 2 12 6 4-4 8-6 12-6 0 6-4 12-12 16z" fill="#fff"/></svg>
+<div class="mu">Logo Tut Wuri Handayani (ganti dengan logo resmi)</div>
+<h1>Multimedia Pembelajaran Interaktif</h1><h3>${MAPEL} · ${MATERI}</h3>
+<p class="mu">Dibuat oleh ${GURU}<br>${SEK}</p>
+<div style="text-align:left"><label>Nama Lengkap<input id="nm" value="${e(S.name)}" placeholder="Tulis namamu" autocomplete="off"></label>
+<label>Kelas<input id="kl" value="${e(S.kls)}"></label></div>
+${S.msg.login?`<div class="st er">${S.msg.login}</div>`:""}
+<button class="b" onclick="start()">Mulai Belajar 🚀</button></div>`}
+function R1(){return `<div class="card"><h2>Selamat belajar, ${e(S.name)}! 👋</h2><p class="mu">Setelah belajar ini kamu bisa mengenal alam di sekitarmu dan memahami mengapa warga bekerja berbeda-beda di tiap daerah.</p></div>
+<h2>🎯 Tujuan Pembelajaran</h2>${TP.map(t=>`<div class="card"><div style="font-size:2rem">${t[0]}</div>${e(t[1])}</div>`).join("")}
+<div class="nav"><span></span><button class="b" onclick="go(2)">Lanjut ke Materi ➜</button></div>`}
+function R2(){const s=SUB[S.sub];let h=`<div class="card"><div class="mu">Submateri ${S.sub+1} dari ${SUB.length}</div><h2>${s.i} ${s.t}</h2><p>${s.p}</p>`;
+  if(s.sort){h+=s.sort.map((x,i)=>{const a=S.sorted[i];return `<div style="margin:8px 0"><b>${x[0]}</b> ${a?(a===x[1]?`<span style="color:var(--ok)">✔ Benar!</span>`:`<span style="color:var(--no)">✘ Coba lagi</span>`):""}<br><button class="b s" onclick="srt(${i},'a')">🌿 Alam</button> <button class="b s" onclick="srt(${i},'b')">🏗️ Buatan</button></div>`}).join("")}
+  else h+=`<div class="g">${s.c.map((c,i)=>{const k=S.sub+"-"+i;return `<button class="k" onclick="S.open['${k}']=!S.open['${k}'];render()"><b>${c[0]}</b>${S.open[k]?`<br>${c[1]}`:`<br><span class="mu">Ketuk untuk membuka</span>`}</button>`}).join("")}</div>`;
+  h+=`</div><div class="nav"><button class="b s" onclick="S.sub>0?(S.sub--,render(),scrollTo(0,0)):go(1)">⬅ Sebelumnya</button><button class="b" onclick="S.sub<SUB.length-1?(S.sub++,render(),scrollTo(0,0)):go(3)">${S.sub<SUB.length-1?"Berikutnya ➜":"Ke Latihan ➜"}</button></div>`;return h}
+function srt(i,v){const ok=SUB[0].sort[i][1]===v;S.sorted[i]=ok?v:"x";if(!ok)S.sorted[i]=null;S.sorted[i]=ok?SUB[0].sort[i][1]:null;if(!ok)alert("Belum tepat, coba lagi!");render()}
+function R3(){
+  if(S.res){const r=S.res;let h=`<div class="card" style="text-align:center"><h2>Hasil Latihan (Percobaan ${r.att})</h2><div style="font-size:3rem;font-weight:800;color:var(--pr)">${r.nilai}</div><p>Benar: <b>${r.b}</b> · Salah: <b>${r.s}</b> dari ${Q.length} soal</p><p>${r.nilai>=80?"Hebat sekali! 🌟":r.nilai>=60?"Bagus! Pelajari lagi bagian yang salah. 👍":"Ayo belajar lagi materinya, kamu pasti bisa! 💪"}</p>
+  ${stat("lat")}<div class="nav"><button class="b s" onclick="S.res=null;S.ans=[];S.done=false;render()">Coba Lagi 🔁</button><button class="b" onclick="go(4)">Lanjut Refleksi ➜</button></div></div><h3>Pembahasan</h3>`;
+  h+=Q.map((q,i)=>`<div class="card"><b>${i+1}. ${q[0]}</b><br>Jawabanmu: ${e(q[1][r.a[i]])} ${r.a[i]===q[2]?"✔":"✘"}<br>Kunci: <b>${q[1][q[2]]}</b><br><span class="mu">${q[3]}</span></div>`).join("");return h}
+  const n=S.ans.filter(x=>x!==undefined&&x!==null).length;if(!S.t0)S.t0=Date.now();
+  return `<div class="card"><h2>✏️ Latihan (${Q.length} soal)</h2><div class="pg"><i style="width:${n/Q.length*100}%"></i></div><div class="mu">Terjawab ${n} dari ${Q.length}</div></div>`+
+  Q.map((q,i)=>`<div class="card"><b>${i+1}. ${q[0]}</b>${q[1].map((o,j)=>`<button class="o ${S.ans[i]===j?"sel":""}" onclick="S.ans[${i}]=${j};render(true)">${["A","B","C","D"][j]}. ${o}</button>`).join("")}</div>`).join("")+
+  `<div class="nav"><button class="b s" onclick="go(2)">⬅ Materi</button><button class="b" ${n<Q.length||S.busy.lat?"disabled":""} onclick="kirim()">Kirim Jawaban</button></div>${n<Q.length?`<p class="mu">Jawab semua soal dulu untuk mengirim.</p>`:""}`}
+function stat(k){const m=S.msg[k];return m?`<div class="st ${m[0]}">${m[1]}</div>`:""}
+function status(r,what){return r==="ok"?["ok","✔ "+what+" sudah tersimpan di database artifact (dikonfirmasi sistem)."]:r==="local"?["wa","⚠ Penyimpanan online tidak tersedia. "+what+" hanya tersimpan di perangkat ini. Gunakan tombol Unduh CSV di bawah."]:["er","✘ Gagal menyimpan "+what+". Tekan Kirim Ulang."]}
+async function kirim(){if(S.busy.lat||S.res)return;S.busy.lat=1;
+  let b=0;Q.forEach((q,i)=>{if(S.ans[i]===q[2])b++});S.att++;const tot=Math.round((Date.now()-S.t0)/1000);
+  S.res={att:S.att,b,s:Q.length-b,nilai:Math.round(b/Q.length*100),a:S.ans.slice()};
+  const d={sesi:S.sid,nama:S.name,kelas:S.kls,materi:MATERI,percobaan:S.att,jumlah_soal:Q.length,benar:b,salah:Q.length-b,nilai:S.res.nilai,waktu:now(),durasi_detik:tot};
+  S.msg.lat=["wa","Menyimpan…"];render();
+  const r=await save("mpi_hasil",S.sid+"-"+S.att,d);S.msg.lat=status(r,"Nilai");S.busy.lat=0;S.t0=null;S.res.d=d;
+  if(r==="err"){S.res.retry=d}render()}
+function R4(){const f=S.ref;
+  if(S.sent.ref)return `<div class="card" style="text-align:center"><h2>Terima kasih, ${e(S.name)}! 🎉</h2><p>Ringkasan belajarmu:</p><p>📚 ${SUB.length} submateri dipelajari<br>✏️ Nilai latihan terakhir: <b>${S.res?S.res.nilai:"belum mengerjakan"}</b><br>💭 Refleksi sudah dikirim</p>${stat("ref")}</div>`;
+  const rd=(k,l,o)=>`<h3>${l}</h3>`+o.map(x=>`<button class="o ${f[k]===x?"sel":""}" onclick="S.ref.${k}='${x}';render(true)">${x}</button>`).join("");
+  const ta=(k,l)=>`<h3>${l}</h3><textarea rows="2" id="${k}" oninput="S.ref.${k}=this.value">${e(f[k])}</textarea>`;
+  const ok=f.p1&&f.p2;
+  return `<div class="card"><h2>💭 Refleksi Pembelajaran</h2>${rd("p1","1. Bagaimana perasaanmu setelah mempelajari materi ini?",["Senang","Biasa saja","Masih bingung"])}${rd("p2","2. Seberapa baik kamu memahami materi?",["Sangat paham","Cukup paham","Perlu belajar lagi"])}${ta("t1","3. Apa hal paling menarik yang kamu pelajari hari ini?")}${ta("t2","4. Bagian materi apa yang masih sulit dipahami?")}${ta("t3","5. Apa yang ingin kamu pelajari lebih lanjut?")}${stat("ref")}
+  <div class="nav"><button class="b s" onclick="go(3)">⬅ Latihan</button><button class="b" ${!ok||S.busy.ref?"disabled":""} onclick="kirimRef()">Kirim Refleksi</button></div>${ok?"":`<p class="mu">Pilih jawaban nomor 1 dan 2 dulu.</p>`}</div>`}
+async function kirimRef(){if(S.busy.ref||S.sent.ref)return;S.busy.ref=1;S.msg.ref=["wa","Mengirim…"];render();
+  const d={sesi:S.sid,nama:S.name,kelas:S.kls,materi:MATERI,perasaan:S.ref.p1,pemahaman:S.ref.p2,menarik:S.ref.t1,sulit:S.ref.t2,ingin:S.ref.t3,waktu:now()};
+  const r=await save("mpi_refleksi",S.sid,d);S.msg.ref=status(r,"Refleksi");S.busy.ref=0;if(r!=="err"){S.sent.ref=1;save("mpi_sesi",S.sid+"-selesai",{waktu:now(),nama:S.name,kelas:S.kls,status:S.res?"Selesai":"Refleksi tanpa latihan"})}render()}
+async function csv(){const a=LS.get();if(!a.length){alert("Belum ada data di perangkat ini.");return}
+  const keys=[...new Set(a.flatMap(Object.keys))];const t=[keys.join(",")].concat(a.map(r=>keys.map(k=>'"'+String(r[k]??"").replace(/"/g,'""')+'"').join(","))).join("\n");
+  try{const d=await claude.use("downloads");if(d){await d.save({filename:"hasil-mpi-ipas.csv",data:t});return}}catch(_){}
+  const l=document.createElement("a");l.href=URL.createObjectURL(new Blob([t],{type:"text/csv"}));l.download="hasil-mpi-ipas.csv";l.click()}
+async function R5load(){if(!DB){S.rekap={err:"Database tidak tersedia."};return render()}
+  try{const g=async c=>(await DB.collection(c).get()).docs.map(x=>x.data());const[a,h,rf]=await Promise.all([g("mpi_sesi"),g("mpi_hasil"),g("mpi_refleksi")]);S.rekap={a,h,rf};}catch(x){S.rekap={err:"Gagal membaca data: "+(x.message||x.code)}}render()}
+function R5(){if(!S.rekap){R5load();return `<div class="card">Memuat rekap…</div>`}const k=S.rekap;if(k.err)return `<div class="card"><div class="st er">${k.err}</div></div>`;
+  const best={};k.h.forEach(x=>{if(!best[x.sesi]||x.nilai>best[x.sesi].nilai)best[x.sesi]=x});const v=Object.values(best),ns=v.map(x=>x.nilai);
+  const names=new Set(k.a.filter(x=>x.status==="Mulai").map(x=>x.sesi));const dist={};k.rf.forEach(x=>dist[x.pemahaman]=(dist[x.pemahaman]||0)+1);
+  const help=[...v.filter(x=>x.nilai<60).map(x=>x.nama+" (nilai "+x.nilai+")"),...k.rf.filter(x=>x.pemahaman==="Perlu belajar lagi"||x.perasaan==="Masih bingung").map(x=>x.nama+" (refleksi)")];
+  return `<div class="card"><h2>📊 Rekap Guru</h2><p>Siswa tercatat: <b>${names.size}</b> · Menyelesaikan latihan: <b>${v.length}</b> (${names.size?Math.round(v.length/names.size*100):0}%)<br>Rata-rata: <b>${ns.length?(ns.reduce((a,b)=>a+b,0)/ns.length).toFixed(1):"-"}</b> · Tertinggi: <b>${ns.length?Math.max(...ns):"-"}</b> · Terendah: <b>${ns.length?Math.min(...ns):"-"}</b></p>
+  <p>Pemahaman: ${Object.keys(dist).map(x=>x+" "+dist[x]).join(" · ")||"-"}</p><p><b>Perlu pendampingan:</b> ${[...new Set(help)].map(e).join(", ")||"-"}</p>
+  <div class="sc"><table><tr><th>Nama</th><th>Kls</th><th>Percobaan</th><th>Nilai</th></tr>${k.h.map(x=>`<tr><td>${e(x.nama)}</td><td>${e(x.kelas)}</td><td>${x.percobaan}</td><td>${x.nilai}</td></tr>`).join("")}</table></div>
+  <button class="b s" onclick="S.rekap=null;render()">Muat ulang</button></div>`}
+function render(keep){const y=scrollY;const v=[R0,R1,R2,R3,R4,R5][S.pg]();
+  $("app").innerHTML=(S.pg>0||S.sid?hdr():"")+v+(S.sid?`<div class="card"><button class="b s" onclick="csv()">⬇ Unduh CSV data di perangkat ini</button>${S.res&&S.res.retry?` <button class="b" onclick="retry()">Kirim Ulang Nilai</button>`:""}<p class="mu">Peserta: ${e(S.name)} · Kelas ${e(S.kls)} · ID sesi ${S.sid}</p></div>`:"");
+  if(keep)scrollTo(0,y)}
+async function retry(){if(S.busy.lat)return;S.busy.lat=1;const d=S.res.retry;const r=await save("mpi_hasil",d.sesi+"-"+d.percobaan,d);S.msg.lat=status(r,"Nilai");if(r!=="err")S.res.retry=null;S.busy.lat=0;render()}
+render();
+</script></body></html>
